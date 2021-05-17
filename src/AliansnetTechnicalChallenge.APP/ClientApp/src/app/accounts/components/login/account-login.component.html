@@ -1,0 +1,36 @@
+<form class="mt-10" #f="ngForm" >
+  <div class="row">
+    <p>Login or Created an account <a [routerLink]="['/register']">here</a></p>
+  </div>
+
+  <div *ngIf="authData.errors.length" class="row  mt-10">
+    <small class="form-text alert alert-danger">
+      <li *ngFor="let err of authData.errors" >{{err}}</li>
+    </small>
+  </div>
+
+  <div class="row" >
+    <div class="form-group">
+      <label for="email">Email</label>
+      <input [(ngModel)]="loginData.email" name="email" type="email" class="form-control" id="email" aria-describedby="emailHelp"
+        placeholder="Enter your email" #email="ngModel" required
+
+        [class.has-error]="email.invalid && (email.dirty || email.touched)"
+
+        >
+    </div>
+    <div class="form-group ml-20">
+      <label for="password">Password</label>
+      <input [(ngModel)]="loginData.password" name="password" type="password" class="form-control" id="password" placeholder="Password" #pwd="ngModel" required
+
+      [class.has-error]="pwd.invalid && (pwd.dirty || pwd.touched)"
+      >
+
+
+      <!-- <small *ngIf="pwd.invalid && (pwd.dirty || pwd.touched)" class="form-text alert alert-danger">Enter your password</small> -->
+    </div>
+  </div>
+  <div class="row">
+    <button [disabled]="!f.form.valid || authData.requestingLogin " (click)="loginClicked()" type="button" class="btn btn-primary">Login</button>
+  </div>
+</form>

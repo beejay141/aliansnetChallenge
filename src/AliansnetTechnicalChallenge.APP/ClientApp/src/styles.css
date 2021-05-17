@@ -1,0 +1,60 @@
+/* You can add global styles to this file, and also import other style files */
+
+/* Provide sufficient contrast against white background */
+a {
+  color: #0366d6;
+}
+
+code {
+  color: #e01a76;
+}
+
+.btn-primary {
+  color: #fff;
+  background-color: #1b6ec2;
+  border-color: #1861ac;
+}
+
+html, body { height: 100%; }
+body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+p { width: 100%;}
+
+.w-100p{
+  width: 100%;
+}
+
+.w-300px{
+  width: 300px;
+}
+
+.mt-10{
+  margin-top: 10px;
+}
+
+.mt-30{
+  margin-top: 30px;
+}
+
+.ml-20{
+  margin-left: 20px;
+}
+
+.bg-danger{
+  background: tomato;
+  color: #fff;
+}
+
+.has-error {
+  border-color: #f54556 !important;
+}
+
+
+.dia-form {
+  min-width: 150px;
+  max-width: 500px;
+  width: 100%;
+}
+
+.full-width {
+  width: 100%;
+}
