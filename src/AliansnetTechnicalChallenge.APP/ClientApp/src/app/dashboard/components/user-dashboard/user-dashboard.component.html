@@ -2,7 +2,13 @@
   <button type="button" (click)="openAddDialog()" class="btn btn-primary">New Product</button>
 </div>
 
-<div class="mt-30">
+<div class="row mt-30">
+  <mat-form-field appearance="fill">
+    <mat-label>Filter by Product Name</mat-label>
+    <input name="name" [(ngModel)]="filter.name" (ngModelChange)="filterProducts()" placeholder="Filter by Product Name" matInput>
+  </mat-form-field>
+</div>
+<div class="mt-10">
   <table class="table">
     <thead>
       <tr>

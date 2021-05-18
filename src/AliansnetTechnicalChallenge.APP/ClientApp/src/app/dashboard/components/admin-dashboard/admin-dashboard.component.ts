@@ -32,7 +32,6 @@ export class AdminDashboardComponent implements OnInit, OnDestroy {
     this.usersData$.pipe(
       takeUntil(this.unsubscribe)
     ).subscribe(usersState => {
-      console.log(usersState);
       this.usersData = usersState;
     });
   }

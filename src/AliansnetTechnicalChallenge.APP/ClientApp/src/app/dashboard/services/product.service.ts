@@ -4,6 +4,7 @@ import { Inject, Injectable } from '@angular/core';
 import { ProductModel } from '../models/products/product.model';
 import { BaseAPIResponse } from 'src/app/shared/models/responses/base-api.reponse';
 import { ProductAuditModel } from '../models/products/product-audit.model';
+import { ProductFilterModel } from '../models/products/product-filter.model';
 
 @Injectable({ providedIn: 'root' })
 export class ProductService {
@@ -26,8 +27,8 @@ export class ProductService {
     return this.httpClient.delete<BaseAPIResponse<ProductModel>>(`${this.base_url}/products/remove-product/${id}`);
   }
 
-  GetProducts() {
-    return this.httpClient.get<BaseAPIResponse<ProductModel[]>>(`${this.base_url}/products`);
+  GetProducts({name,page,pageSize} : ProductFilterModel) {
+    return this.httpClient.get<BaseAPIResponse<ProductModel[]>>(`${this.base_url}/products?name=${name}&page=${page}&pageSize=${pageSize}`);
   }
 
   GetUserProducts(id:string) {

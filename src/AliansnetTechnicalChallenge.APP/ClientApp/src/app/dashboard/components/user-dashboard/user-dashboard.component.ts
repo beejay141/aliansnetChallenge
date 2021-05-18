@@ -11,6 +11,7 @@ import { AddProductDialog } from './components/add-product/add-product-dialog.co
 import { EditProductDialog } from './components/edit-product/edit-product-dialog.component';
 import { RemoveProductDialog } from './components/delete-product/remove-product-dialog.component';
 import { ProductLogDialog } from '../product-log-dialog/product-log-dialog.component';
+import { ProductFilterModel } from '../../models/products/product-filter.model';
 
 @Component({
   selector: 'user-dashboard',
@@ -18,6 +19,8 @@ import { ProductLogDialog } from '../product-log-dialog/product-log-dialog.compo
 })
 
 export class UserDashboardComponent implements OnInit, OnDestroy {
+
+  filter : ProductFilterModel
 
   productData: ProductState = productsInitialState;
   private unsubscribe: Subject<void> = new Subject();
@@ -27,7 +30,9 @@ export class UserDashboardComponent implements OnInit, OnDestroy {
   constructor(private store: Store<AppState>, public dialog: MatDialog) { }
 
   ngOnInit() {
-    this.store.dispatch(refreshProductsAction());
+    this.filter = new ProductFilterModel();
+
+    this.filterProducts();
 
     this.productData$.pipe(
       takeUntil(this.unsubscribe)
@@ -42,7 +47,6 @@ export class UserDashboardComponent implements OnInit, OnDestroy {
     });
 
     dialogRef.afterClosed().subscribe(result => {
-      // console.log('The dialog was closed');
     });
   }
 
@@ -65,6 +69,10 @@ export class UserDashboardComponent implements OnInit, OnDestroy {
       width: '800px',
       data: this.productData.data.find(c => c.id == id)
     });
+  }
+
+  filterProducts(){
+    this.store.dispatch(refreshProductsAction({filter:this.filter}));
   }
 
   ngOnDestroy() {

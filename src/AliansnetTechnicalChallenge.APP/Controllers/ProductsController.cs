@@ -97,7 +97,7 @@ namespace AliansnetTechnicalChallenge.APP.Controllers
             {
                 var user = await accountService.GetUserWithContextUser(User);
 
-                var products = await productService.GetUserProducts(c => c.UserId == user.Id && c.Name == model.Name, 0, 1, false);
+                var products = await productService.GetUserProducts(c => c.UserId == user.Id && c.Name == model.Name && c.RecordStatus == RecordStatus.Active, 0, 1, false);
                 if (products.Count > 0)
                 {
                     return BadRequest(ApiRes("You already have a product with the same name"));
@@ -130,7 +130,7 @@ namespace AliansnetTechnicalChallenge.APP.Controllers
                 if (product == null) return BadRequest(ApiRes("Product with the supplied ID not found"));
                 if (product.UserId != user.Id) return BadRequest(ApiRes("Product with the supplied ID not found"));
 
-                var products = await productService.GetUserProducts(c => c.UserId == user.Id && c.Name == model.Name && c.Id != id, 0, 1, false);
+                var products = await productService.GetUserProducts(c => c.UserId == user.Id && c.Name == model.Name && c.Id != id && c.RecordStatus == RecordStatus.Active, 0, 1, false);
                 if (products.Count > 0) return BadRequest(ApiRes("You already have a product with the same name"));
 
                 var auditMsg = $"you updated the product. Price {product.Price} => {model.Price} and Name: {product.Name} => {model.Name}";

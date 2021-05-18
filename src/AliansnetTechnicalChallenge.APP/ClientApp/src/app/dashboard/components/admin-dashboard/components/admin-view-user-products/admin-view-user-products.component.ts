@@ -38,7 +38,6 @@ export class AdminViewUserProductComponent implements OnInit, OnDestroy {
     this.productData$.pipe(
       takeUntil(this.unsubscribe)
     ).subscribe(productState => {
-      console.log(productState);
       this.productsData = productState;
     });
 

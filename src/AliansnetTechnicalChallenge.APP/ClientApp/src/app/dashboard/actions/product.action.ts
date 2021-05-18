@@ -1,11 +1,13 @@
 import { createAction, props } from "@ngrx/store";
 import { AddProductModel } from "../models/products/add-product.model";
+import { ProductFilterModel } from "../models/products/product-filter.model";
 import { ProductModel } from "../models/products/product.model";
 
 
 
 export const refreshProductsAction = createAction(
-  '[user-products] get user"s products'
+  '[user-products] get user"s products',
+  props<{filter: ProductFilterModel}>()
 )
 
 export const refreshProductDoneAction = createAction(

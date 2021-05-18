@@ -3,6 +3,7 @@ import { Actions, createEffect, ofType } from '@ngrx/effects';
 import { of } from 'rxjs';
 import { catchError, map, switchMap } from 'rxjs/operators';
 import { createProductFailedAction as productFailedAction, createRequestProductAction, deleteProductRequestAction, editProductRequestAction, refreshProductDoneAction, refreshProductsAction } from '../actions/product.action';
+import { ProductFilterModel } from '../models/products/product-filter.model';
 import { ProductService } from '../services/product.service';
 
 @Injectable()
@@ -13,8 +14,8 @@ export class ProductEffect {
 
   refreshProduct$ = createEffect(() => this.actions$.pipe(
     ofType(refreshProductsAction),
-    switchMap(() => {
-      return this.productService.GetProducts()
+    switchMap((action) => {
+      return this.productService.GetProducts(action.filter)
         .pipe(
           map((data) => refreshProductDoneAction({ data: data.data}))
         )
@@ -26,7 +27,7 @@ export class ProductEffect {
     switchMap((action) => {
       return this.productService.CreateProduct(action.data)
         .pipe(
-          map(() => refreshProductsAction()),
+          map(() => refreshProductsAction({filter:new ProductFilterModel()})),
           catchError((err: any) => of(productFailedAction({ errors: err.error.message == "error" ? err.error.errors : [err.error.message] })))
         )
     })
@@ -37,7 +38,7 @@ export class ProductEffect {
     switchMap((action) => {
       return this.productService.EditProduct(action.id,action.data)
         .pipe(
-          map(() => refreshProductsAction()),
+          map(() => refreshProductsAction({filter:new ProductFilterModel()})),
           catchError((err: any) => of(productFailedAction({ errors: err.error.message == "error" ? err.error.errors : [err.error.message] })))
         )
     })
@@ -48,7 +49,7 @@ export class ProductEffect {
     switchMap((action) => {
       return this.productService.RemoveProduct(action.id)
         .pipe(
-          map(() => refreshProductsAction()),
+          map(() => refreshProductsAction({filter:new ProductFilterModel()})),
           catchError((err: any) => of(productFailedAction({ errors: err.error.message == "error" ? err.error.errors : [err.error.message] })))
         )
     })
