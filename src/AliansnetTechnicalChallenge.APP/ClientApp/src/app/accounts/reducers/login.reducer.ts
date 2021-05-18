@@ -1,9 +1,8 @@
-import { getAuthStatusAction, loginFailedAction } from './../actions/login.action';
+import { getAuthStatusAction, loginFailedAction, logoutAction } from './../actions/login.action';
 import { createReducer, on } from '@ngrx/store';
 import { AccountState, authStatusInitialState, AuthStatusState, loginInitialState } from '../account.state';
 import { loginAction, loginSuccessAction } from '../actions/login.action';
 import { LoginResponse } from './../models/response/login.response';
-import { state } from '@angular/animations';
 
 
 export const loginReducer = createReducer<AccountState>(loginInitialState,
@@ -22,6 +21,13 @@ export const loginReducer = createReducer<AccountState>(loginInitialState,
     ...state,
     requestingLogin: false,
     errors: action.errors
+  })),
+  on(logoutAction, (state, action) => ({
+    ...state,
+    requestingLogin: false,
+    data: null,
+    loggedIn : false,
+    errors: []
   })));
 
   export const authStatusReducer = createReducer<AuthStatusState>(authStatusInitialState,

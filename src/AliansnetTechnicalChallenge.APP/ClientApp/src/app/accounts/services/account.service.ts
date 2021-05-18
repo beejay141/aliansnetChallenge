@@ -7,6 +7,8 @@ import { HttpClient } from '@angular/common/http';
 import { Inject, Injectable } from '@angular/core';
 import { RegisterModel } from '../models/request/register.model';
 import { LoginStatus } from '../models/login-status.model';
+import { UserFilterModel } from 'src/app/dashboard/models/users/user-filter.model';
+import { UserModel } from 'src/app/dashboard/models/users/user.model';
 
 @Injectable({ providedIn: 'root' })
 export class AccountService {
@@ -24,6 +26,10 @@ export class AccountService {
 
   Login(data: LoginModel) {
     return this.httpClient.post<BaseAPIResponse<LoginResponse>>(`${this.base_url}/auth/login`, data);
+  }
+
+  GetUsers({username,pageSize,page}: UserFilterModel) {
+    return this.httpClient.get<BaseAPIResponse<UserModel[]>>(`${this.base_url}/Account/users?username=${username}&page=${page}&pageSize=${pageSize}`);
   }
 
   GetAuthStatus(): LoginStatus {
@@ -45,6 +51,11 @@ export class AccountService {
     }
 
     return data
+  }
+
+  LogOut(){
+    this.helperService.RemoveLocalStorageData("tk");
+    location.href = '/';
   }
 
 

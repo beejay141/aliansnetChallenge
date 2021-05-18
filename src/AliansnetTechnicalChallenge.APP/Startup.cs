@@ -8,6 +8,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.OpenApi.Models;
+using System.Threading.Tasks;
 
 namespace AliansnetTechnicalChallenge.APP
 {
@@ -23,26 +24,17 @@ namespace AliansnetTechnicalChallenge.APP
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddControllersWithViews()
-                .ConfigureApiBehaviorOptions(options =>
-                {
-                    options.SuppressModelStateInvalidFilter = true;
-                    options.SuppressMapClientErrors = true;
-                }).AddFluentValidation(fv =>
-                {
-                    fv.RunDefaultMvcValidationAfterFluentValidationExecutes = false;
-                });
+
 
             services.ConfigureCoreService(Configuration);
             services.ConfigureInfrastructureServices();
 
 
-
-            // In production, the Angular files will be served from this directory
-            services.AddSwaggerGen(c =>
-            {
-                c.SwaggerDoc("v1", new OpenApiInfo { Title = "AliansnetTechnicalChallenge.API", Version = "v1" });
-            });
+            services.AddControllersWithViews()
+                .AddFluentValidation(fv =>
+                {
+                    fv.RunDefaultMvcValidationAfterFluentValidationExecutes = false;
+                });
 
             services.AddSpaStaticFiles(configuration =>
             {
@@ -55,23 +47,18 @@ namespace AliansnetTechnicalChallenge.APP
         {
             if (env.IsDevelopment())
             {
-                app.UseSwagger();
-                app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "AliansnetTechnicalChallenge.API v1"));
-                app.UseStatusCodePagesWithReExecute("/errors/{0}");
-
-                //app.UseDeveloperExceptionPage();
+                app.UseDeveloperExceptionPage();
             }
             else
             {
-                app.UseStatusCodePagesWithReExecute("/errors/{0}");
-                //app.UseExceptionHandler("/Error");
+                app.UseExceptionHandler("/Error");
 
 
                 // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
                 //app.UseHsts();
             }
 
-            app.UseHttpsRedirection();
+            //app.UseHttpsRedirection();
             app.UseStaticFiles();
             if (!env.IsDevelopment())
             {

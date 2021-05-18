@@ -5,14 +5,17 @@ import { Injectable } from '@angular/core';
 @Injectable()
 export class NonAuthGuard implements CanActivate {
 
-    constructor(private accountService: AccountService,private router: Router) { }
+  constructor(private accountService: AccountService, private router: Router) { }
 
-    canActivate(){
-      let authData = this.accountService.GetAuthStatus();
-        if(authData.loggedIn){
-             window.location.href = '/dashboard';
-             return false;
-        }
-        return true;
+  canActivate() {
+    let authData = this.accountService.GetAuthStatus();
+    if (authData.loggedIn && authData.role == "Worker") {
+      window.location.href = '/dashboard';
+      return false;
+    } else if (authData.loggedIn && authData.role == "Admin") {
+      window.location.href = '/dashboard/admin';
+      return false;
     }
+    return true;
+  }
 }

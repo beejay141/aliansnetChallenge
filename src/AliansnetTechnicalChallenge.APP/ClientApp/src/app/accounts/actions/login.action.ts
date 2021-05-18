@@ -22,3 +22,7 @@ export const getAuthStatusAction = createAction(
   '[auth:status] check if the user is logged in',
   props<{data: LoginStatus}>()
 )
+
+export const logoutAction = createAction(
+  '[auth/logout] log user out'
+)

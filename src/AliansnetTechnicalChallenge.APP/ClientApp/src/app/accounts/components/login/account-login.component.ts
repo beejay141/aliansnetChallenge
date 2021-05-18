@@ -1,12 +1,13 @@
 import { AppState } from './../../../app.state';
 import { LoginModel } from './../../models/request/login.model';
-import { loginAction } from './../../actions/login.action';
+import { loginAction, logoutAction } from './../../actions/login.action';
 import { AccountState } from './../../account.state';
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { select } from '@ngrx/store';
 import { Observable, Subject } from "rxjs";
 import { takeUntil } from "rxjs/operators";
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'account-login',
@@ -26,15 +27,23 @@ export class AccountLoginComponent implements OnInit, OnDestroy {
 
   authData$ : Observable<AccountState> = this.store.pipe(select(state => state.loginState));
 
-  constructor(private store: Store<AppState>) {}
+  constructor(private store: Store<AppState>, private router : Router) {}
 
   ngOnInit() {
 
     this.authData$.pipe(
       takeUntil(this.unsubscribe)
     ).subscribe(authState=>{
-      console.log(authState);
       this.authData = authState;
+      if (authState.loggedIn) {
+        if (this.authData.data.role == "Worker") {
+          this.router.navigate(['/dashboard']);
+        }else if(authState.data.role == "Admin"){
+            this.router.navigate(['/dashboard/admin']);
+        }else{
+          this.store.dispatch(logoutAction());
+        }
+      }
     });
   }
 

@@ -11,6 +11,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AliansnetTechnicalChallenge
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AliansnetTechnicalChallenge.APP", "src\AliansnetTechnicalChallenge.APP\AliansnetTechnicalChallenge.APP.csproj", "{0FBC4796-A767-42EF-A42E-007C8787B99F}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "tests", "tests", "{B049AB79-B911-4392-B1F3-527952739A47}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU

@@ -1,3 +1,4 @@
+import { logoutAction } from './../actions/login.action';
 import { HelperService } from './../../shared/services/helper.service';
 import { AccountService } from './../services/account.service';
 import { Injectable } from '@angular/core';
@@ -40,7 +41,6 @@ export class LoginEffects {
         }));
     })
   ));
-
 
   getAuthStatus$ = createEffect(() => this.actions$.pipe(
     ofType(getAuthStatusAction),

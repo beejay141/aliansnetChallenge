@@ -52,10 +52,29 @@ namespace AliansnetTechnicalChallenge.APP.Helpers.Extensions
                 option.Password.RequireUppercase = false;
                 option.Password.RequireNonAlphanumeric = false;
                 option.Password.RequiredLength = 6;
-                option.User.RequireUniqueEmail = true;
+                option.User.RequireUniqueEmail = true; 
             }).AddEntityFrameworkStores<MssqlDbContext>()
              .AddDefaultTokenProviders();
             #endregion
+
+            //services.ConfigureApplicationCookie(options =>
+            //{
+
+            //    options.Events.OnRedirectToReturnUrl = context =>
+            //    {
+            //        context.Response.StatusCode = 401;
+            //        return Task.CompletedTask;
+            //    };
+            //});
+
+            //services.ConfigureApplicationCookie(options =>
+            //{
+            //    options.Events.OnRedirectToAccessDenied = context =>
+            //    {
+            //        context.Response.StatusCode = 401;
+            //        return Task.CompletedTask;
+            //    };
+            //});
 
 
             #region config authentication 
@@ -63,10 +82,22 @@ namespace AliansnetTechnicalChallenge.APP.Helpers.Extensions
             {
                 options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
                 options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+                options.DefaultScheme = JwtBearerDefaults.AuthenticationScheme;
             }).AddJwtBearer(jwtOption =>
             {
                 jwtOption.RequireHttpsMetadata = false;
                 jwtOption.SaveToken = true;
+                jwtOption.Events = new JwtBearerEvents();
+                jwtOption.Events.OnAuthenticationFailed = context =>
+                {
+                    context.Response.StatusCode = 401;
+                    return Task.CompletedTask;
+                }; jwtOption.Events.OnForbidden = context =>
+                {
+                    context.Response.StatusCode = 401;
+                    return Task.CompletedTask;
+                };
+
                 jwtOption.TokenValidationParameters = new TokenValidationParameters()
                 {
                     ValidateIssuer = true,
@@ -78,6 +109,7 @@ namespace AliansnetTechnicalChallenge.APP.Helpers.Extensions
                 };
             });
             #endregion
+
 
             return services;
         }

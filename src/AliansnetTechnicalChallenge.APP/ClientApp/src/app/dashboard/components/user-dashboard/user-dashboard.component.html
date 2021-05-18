@@ -1,6 +1,5 @@
-
 <div class="row mt-10">
-  <button type="button" (click)="openDialog()" class="btn btn-primary">New Product</button>
+  <button type="button" (click)="openAddDialog()" class="btn btn-primary">New Product</button>
 </div>
 
 <div class="mt-30">
@@ -10,28 +9,21 @@
         <th scope="col">Product Name</th>
         <th scope="col">Product Price</th>
         <th scope="col">Status</th>
+        <th scope="col">Created On</th>
+        <th scope="col">Audit Log</th>
         <th scope="col">****</th>
       </tr>
     </thead>
     <tbody>
-      <tr>
-        <td>Mark</td>
-        <td>Otto</td>
-        <td>@mdo</td>
-        <td>@mdo</td>
+      <tr *ngFor="let prod of productData.data">
+        <td>{{prod.name}}</td>
+        <td>{{prod.price | number : '1.2-2' }}</td>
+        <td>{{prod.recordStatus}}</td>
+        <td>{{prod.createdAt | date: 'MMM d, y, h:mm:ss a'}}</td>
+        <td><a class="btn btn-primary cursor-pointer" (click)="openAuditDialog(prod.id)" >View_Logs</a> </td>
+        <td><a class="text-success cursor-pointer" (click)="openEditDialog(prod.id)" >Edit</a> | <a class="text-danger cursor-pointer" (click)="openDeleteDialog(prod.id)" >Delete</a></td>
       </tr>
-      <tr>
-        <td>Jacob</td>
-        <td>Thornton</td>
-        <td>@fat</td>
-        <td>@fat</td>
-      </tr>
-      <tr>
-        <td>Larry</td>
-        <td>the Bird</td>
-        <td>@twitter</td>
-        <td>@twitter</td>
-      </tr>
+
     </tbody>
   </table>
 </div>

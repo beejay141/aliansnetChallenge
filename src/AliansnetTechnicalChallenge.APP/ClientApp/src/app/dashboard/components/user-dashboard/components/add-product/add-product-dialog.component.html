@@ -6,6 +6,12 @@
 </div>
 <div class="modal-body">
     <form #f="ngForm" class="dia-form">
+      <div *ngIf="errors.length && creatingProduct" class="row  mt-10">
+        <small class="form-text alert alert-danger">
+          <li *ngFor="let err of errors" >{{err}}</li>
+        </small>
+      </div>
+
       <mat-form-field class="full-width">
         <mat-label>Product Name</mat-label>
         <input name="name" [(ngModel)]="product.name" required matInput placeholder="Product Name?">
@@ -18,7 +24,7 @@
     </form>
 </div>
 <div class="modal-footer">
-  <button type="button" [disabled]="!f.form.valid" class="btn btn-primary">Save changes</button>
+  <button type="button" [disabled]="!f.form.valid" (click)="doCreateProduct()" class="btn btn-primary">Save changes</button>
   <button type="button" (click)="onNoClick()" cdkFocusInitial class="btn btn-secondary"
     data-dismiss="modal">Close</button>
 </div>

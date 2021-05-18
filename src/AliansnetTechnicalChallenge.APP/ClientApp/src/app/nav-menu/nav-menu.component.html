@@ -16,13 +16,18 @@
             [routerLinkActiveOptions]="{ exact: true }">
             <a class="nav-link text-dark" [routerLink]="['/']">Login</a>
           </li>
-          <li class="nav-item">
+
+
+          <li *ngIf="authData.loggedIn && authData.role == 'Admin'" class="nav-item">
+            <a [routerLink]="['/dashboard/admin']" routerLinkActive="active"  class="nav-link text-dark">Dashboard</a>
+          </li>
+          <li *ngIf="authData.loggedIn" class="nav-item">
             <a class="nav-link text-dark disabled">Hi, {{authData.firstName +' '+ authData.lastName}}
               ({{authData.role}})</a>
           </li>
 
-          <li class="nav-item">
-            <a class="nav-link text-warning">Logout</a>
+          <li *ngIf="authData.loggedIn" class="nav-item">
+            <a class="nav-link text-warning cursor-pointer" (click)="doLogout()" >Logout</a>
           </li>
 
         </ul>

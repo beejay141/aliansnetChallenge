@@ -14,6 +14,7 @@ namespace AliansnetTechnicalChallenge.Infrastructure.Data.EntityConfigurations
     {
         public void Configure(EntityTypeBuilder<AppUser> builder)
         {
+            builder.Property(b => b.CreatedAt).HasDefaultValueSql("GETDATE()");
 
             builder.HasMany<Product>()
                 .WithOne(c => c.User)

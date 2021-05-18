@@ -1,6 +1,7 @@
 ﻿using AliansnetTechnicalChallenge.Core.Entities;
 using AliansnetTechnicalChallenge.Core.Interfaces;
 using AliansnetTechnicalChallenge.Core.Interfaces.Helpers;
+using AliansnetTechnicalChallenge.Core.Interfaces.Repositories;
 using AliansnetTechnicalChallenge.Core.Models.Requests;
 using AliansnetTechnicalChallenge.Core.Models.Requests.Auth;
 using AutoMapper;
@@ -16,13 +17,15 @@ namespace AliansnetTechnicalChallenge.Infrastructure.Services
 {
     public class AccountService : IAccountService
     {
+        private readonly IRepository<AppUser, string> repository;
         private readonly UserManager<AppUser> userManager;
         private readonly ISettings settings;
         private readonly IApplogger logger;
         private readonly IMapper mapper;
 
-        public AccountService(UserManager<AppUser> userManager, ISettings settings, IApplogger logger, IMapper mapper)
+        public AccountService(IRepository<AppUser,string> repository,UserManager<AppUser> userManager, ISettings settings, IApplogger logger, IMapper mapper)
         {
+            this.repository = repository;
             this.userManager = userManager;
             this.settings = settings;
             this.logger = logger;
@@ -48,6 +51,11 @@ namespace AliansnetTechnicalChallenge.Infrastructure.Services
                 _ = logger.ErrorAsync($"An error occurred while creating new user: {ex}");
                 return (null, new string[] { "Unexpected Error has occured" });
             }
+        }
+
+        public async Task<List<AppUser>> GetUsers(Func<AppUser, bool> filter, int skip = 0, int? take = null, bool sortIt = true)
+        {
+            return await repository.FindAllAsync(filter, skip, take, c=>c.CreatedAt);
         }
 
         public async Task<AppUser> GetUserWithContextUser(ClaimsPrincipal User)

@@ -11,8 +11,8 @@
 
   <div class="row" >
     <div class="form-group">
-      <label for="email">Email</label>
-      <input [(ngModel)]="loginData.email" name="email" type="email" class="form-control" id="email" aria-describedby="emailHelp"
+      <label for="email">Email/Username</label>
+      <input [(ngModel)]="loginData.email" name="email" type="text" class="form-control" id="email" aria-describedby="emailHelp"
         placeholder="Enter your email" #email="ngModel" required
 
         [class.has-error]="email.invalid && (email.dirty || email.touched)"
@@ -32,5 +32,13 @@
   </div>
   <div class="row">
     <button [disabled]="!f.form.valid || authData.requestingLogin " (click)="loginClicked()" type="button" class="btn btn-primary">Login</button>
+  </div>
+
+  <div class="row alert-danger mt-10">
+   <dl>
+    <dt>admin username:</dt> <dd>admin</dd>
+    <dt>admin password:</dt> <dd>admin1234</dd>
+   </dl>
+
   </div>
 </form>

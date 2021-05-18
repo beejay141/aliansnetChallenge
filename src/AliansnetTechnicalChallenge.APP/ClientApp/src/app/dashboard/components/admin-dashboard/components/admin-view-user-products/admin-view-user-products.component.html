@@ -1,0 +1,23 @@
+<div class="mt-30">
+  <table class="table">
+    <thead>
+      <tr>
+        <th scope="col">Product Name</th>
+        <th scope="col">Product Price</th>
+        <th scope="col">Status</th>
+        <th scope="col">Created On</th>
+        <th scope="col">Audit Log</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let prod of productsData.data">
+        <td>{{prod.name}}</td>
+        <td>{{prod.price | number : '1.2-2' }}</td>
+        <td>{{prod.recordStatus}}</td>
+        <td>{{prod.createdAt | date: 'MMM d, y, h:mm:ss a'}}</td>
+        <td><a class="btn btn-primary cursor-pointer" (click)="openAuditDialog(prod.id)" >View_Logs</a> </td>
+      </tr>
+
+    </tbody>
+  </table>
+</div>

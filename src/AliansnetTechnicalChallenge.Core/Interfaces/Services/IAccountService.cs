@@ -15,5 +15,8 @@ namespace AliansnetTechnicalChallenge.Core.Interfaces
         Task<(AppUser user, string[] errors)> CreateUser(AppUser newUser, string password);
         Task<(AuthPayload user, string error)> ValidateUserCredentials(string email, string password);
         Task<AppUser> GetUserWithContextUser(ClaimsPrincipal User);
+
+        Task<List<AppUser>> GetUsers(Func<AppUser, bool> filter, int skip = 0, int? take = null, bool sortIt = true);
+        
     }
 }

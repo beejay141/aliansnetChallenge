@@ -1,6 +1,5 @@
 import { AccountService } from './../accounts/services/account.service';
-import { LoginStatus } from './../accounts/models/login-status.model';
-import { getAuthStatusAction } from './../accounts/actions/login.action';
+import { getAuthStatusAction, logoutAction } from './../accounts/actions/login.action';
 import { AuthStatusState } from './../accounts/account.state';
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { select, Store } from '@ngrx/store';
@@ -19,18 +18,17 @@ export class NavMenuComponent implements OnInit, OnDestroy {
   authData: AuthStatusState;
   private unsubscribe: Subject<void> = new Subject();
 
-  authData$ : Observable<AuthStatusState> = this.store.pipe(select(state => state.authState));
+  authData$: Observable<AuthStatusState> = this.store.pipe(select(state => state.authState));
 
-  constructor(private store: Store<AppState>, private accountService: AccountService) {}
+  constructor(private store: Store<AppState>, private accountService: AccountService) { }
 
-  ngOnInit(){
+  ngOnInit() {
 
-    this.store.dispatch(getAuthStatusAction({data : this.accountService.GetAuthStatus()}));
+    this.store.dispatch(getAuthStatusAction({ data: this.accountService.GetAuthStatus() }));
 
     this.authData$.pipe(
       takeUntil(this.unsubscribe)
-    ).subscribe(authState=>{
-      console.log(authState);
+    ).subscribe(authState => {
       this.authData = authState;
     });
   }
@@ -43,9 +41,14 @@ export class NavMenuComponent implements OnInit, OnDestroy {
     this.isExpanded = !this.isExpanded;
   }
 
-  ngOnDestroy(){
+  doLogout(){
+    this.store.dispatch(logoutAction());
+    this.accountService.LogOut();
+  }
+
+  ngOnDestroy() {
     this.unsubscribe.next();
     this.unsubscribe.complete();
-   }
+  }
 
 }

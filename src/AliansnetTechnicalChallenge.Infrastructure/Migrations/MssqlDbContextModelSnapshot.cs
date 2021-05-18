@@ -52,16 +52,16 @@ namespace AliansnetTechnicalChallenge.Infrastructure.Migrations
                     b.HasData(
                         new
                         {
-                            Id = "083d9a5f-1c70-4ec4-9809-73cdb25af96b",
-                            ConcurrencyStamp = "eb85cc93-dffc-46c2-81cc-5261e2be4dc2",
+                            Id = "e7ecfc5f-6158-4434-948b-40cdc33d21a6",
+                            ConcurrencyStamp = "7066799b-0320-43e7-8d94-d1b2dc58bb68",
                             DisplayName = "Administrator",
                             Name = "Admin",
                             NormalizedName = "ADMIN"
                         },
                         new
                         {
-                            Id = "5194de20-077c-4a7c-9821-1d27e57382fb",
-                            ConcurrencyStamp = "aa3c16b4-f764-4683-8ab4-c65c3a57274a",
+                            Id = "69654d2a-66da-4fbf-8271-0da888552919",
+                            ConcurrencyStamp = "3aa884c8-b53d-4524-b566-2ea1cc7ec277",
                             DisplayName = "Worker",
                             Name = "Worker",
                             NormalizedName = "WORKER"
@@ -79,6 +79,11 @@ namespace AliansnetTechnicalChallenge.Infrastructure.Migrations
                     b.Property<string>("ConcurrencyStamp")
                         .IsConcurrencyToken()
                         .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("CreatedAt")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("datetime2")
+                        .HasDefaultValueSql("GETDATE()");
 
                     b.Property<string>("Email")
                         .HasMaxLength(256)
@@ -172,6 +177,10 @@ namespace AliansnetTechnicalChallenge.Infrastructure.Migrations
                     b.HasKey("Id");
 
                     b.HasIndex("UserId", "Name");
+
+                    b.HasIndex("UserId", "RecordStatus");
+
+                    b.HasIndex("UserId", "Name", "RecordStatus");
 
                     b.ToTable("Products");
                 });

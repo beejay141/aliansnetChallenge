@@ -25,7 +25,7 @@ namespace AliansnetTechnicalChallenge.Infrastructure.Services
         {
             try
             {
-                return await repository.FindAllAsync(c => c.ProductId == productId);
+                return await repository.FindAllAsync(c => c.ProductId == productId, orderBy: c=>c.CreatedAt);
             }
             catch (Exception ex)
             {

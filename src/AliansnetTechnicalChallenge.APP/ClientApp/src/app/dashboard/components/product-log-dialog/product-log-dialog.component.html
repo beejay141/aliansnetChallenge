@@ -1,0 +1,31 @@
+<div class="modal-header">
+  <h5 class="modal-title">{{productName}} Audit Logs</h5>
+  <button type="button" (click)="onNoClick()" class="close" data-dismiss="modal" aria-label="Close">
+    <span aria-hidden="true">&times;</span>
+  </button>
+</div>
+<mat-dialog-content class="mat-typography">
+<div class="modal-body">
+  <div class="mt-30">
+    <table class="table">
+      <thead>
+        <tr>
+          <th scope="col">Log</th>
+          <th scope="col">Date</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let prod of audits">
+          <td>{{prod.description}}</td>
+          <td>{{prod.createdAt | date: 'MMM d, y, h:mm:ss a'}}</td>
+        </tr>
+
+      </tbody>
+    </table>
+  </div>
+</div>
+</mat-dialog-content>
+<div class="modal-footer">
+  <button type="button" (click)="onNoClick()" cdkFocusInitial class="btn btn-secondary"
+    data-dismiss="modal">Close</button>
+</div>
