@@ -57,25 +57,6 @@ namespace AliansnetTechnicalChallenge.APP.Helpers.Extensions
              .AddDefaultTokenProviders();
             #endregion
 
-            //services.ConfigureApplicationCookie(options =>
-            //{
-
-            //    options.Events.OnRedirectToReturnUrl = context =>
-            //    {
-            //        context.Response.StatusCode = 401;
-            //        return Task.CompletedTask;
-            //    };
-            //});
-
-            //services.ConfigureApplicationCookie(options =>
-            //{
-            //    options.Events.OnRedirectToAccessDenied = context =>
-            //    {
-            //        context.Response.StatusCode = 401;
-            //        return Task.CompletedTask;
-            //    };
-            //});
-
 
             #region config authentication 
             services.AddAuthentication(options =>
@@ -94,7 +75,7 @@ namespace AliansnetTechnicalChallenge.APP.Helpers.Extensions
                     return Task.CompletedTask;
                 }; jwtOption.Events.OnForbidden = context =>
                 {
-                    context.Response.StatusCode = 401;
+                    context.Response.StatusCode = 403;
                     return Task.CompletedTask;
                 };
 
